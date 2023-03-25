@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DiplomaProject.Migrations\DiplomaProject.Migrations.csproj" />
+    <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\ProfilePhotos\" />
   </ItemGroup>
 
 </Project>

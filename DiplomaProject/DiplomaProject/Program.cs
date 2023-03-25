@@ -80,6 +80,9 @@ namespace DiplomaProject
             builder.Services.AddScoped<IAuthHelper, AuthHelper>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+            builder.Services.AddScoped<IProfileService, ProfileService>();
+            builder.Services.AddScoped<IProfilePhotoService, ProfilePhotoService>();
+            builder.Services.AddScoped<IProfilePhotoRepository, ProfilePhotoRepository>();
 
             var app = builder.Build();
 
@@ -97,19 +100,21 @@ namespace DiplomaProject
 
             app.MapControllers();
 
-            try
-            {
-                using var scope = app.Services.CreateScope();
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                if (context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
-                {
-                    context.Database.MigrateAsync().Wait();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            app.UseStaticFiles();
+
+            //try
+            //{
+            //    using var scope = app.Services.CreateScope();
+            //    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            //    if (context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            //    {
+            //        context.Database.MigrateAsync().Wait();
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
 
             app.Run();
         }

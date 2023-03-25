@@ -8,5 +8,7 @@
 
         public byte[] PasswordHash { get; set; } = default!;
         public byte[] PasswordSalt { get; set; } = default!;
+
+        public virtual ProfilePhotoEntity ProfilePhoto { get; set; } = default!;
     }
 }

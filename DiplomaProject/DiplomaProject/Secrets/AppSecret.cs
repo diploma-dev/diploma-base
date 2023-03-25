@@ -22,5 +22,10 @@ namespace DiplomaProject.Secrets
             public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
         }
+
+        public static class PhotoSecret
+        {
+            public const string ProfilePhotoPath = "/ProfilePhotos/";
+        }
     }
 }

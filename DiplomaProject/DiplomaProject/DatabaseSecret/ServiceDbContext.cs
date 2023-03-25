@@ -10,6 +10,7 @@ namespace DiplomaProject.DatabaseSecret
 
         public virtual DbSet<UserEntity> Users { get; set; }
         public virtual DbSet<RefreshTokenEntity> RefreshTokens { get; set; }
+        public virtual DbSet<ProfilePhotoEntity> ProfilePhotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

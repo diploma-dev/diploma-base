@@ -5,7 +5,7 @@ namespace DiplomaProject.Controllers
 {
     public abstract class ApiBaseController : ControllerBase
     {
-        protected Guid GetCurrentUserId()
+        protected long GetCurrentUserId()
         {
             var claimsPrincipal = HttpContext.User as ClaimsPrincipal;
 
@@ -22,7 +22,7 @@ namespace DiplomaProject.Controllers
                 throw new UnauthorizedAccessException();
             }
 
-            if (!Guid.TryParse(claimEmployeeId.Value, out Guid employeeId))
+            if (!long.TryParse(claimEmployeeId.Value, out long employeeId))
             {
                 throw new UnauthorizedAccessException();
             }

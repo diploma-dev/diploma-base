@@ -3,6 +3,8 @@ using DiplomaProject.EntityModels;
 using DiplomaProject.Models.AuthHelpers;
 using DiplomaProject.Models.DTO;
 using DiplomaProject.Models.RequestModels;
+using DiplomaProject.Models.ResponseModels;
+using DiplomaProject.Models.ResponseModels.ProfilePhoto;
 
 namespace DiplomaProject.AutoMapper
 {
@@ -24,6 +26,11 @@ namespace DiplomaProject.AutoMapper
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Id));
 
             CreateMap<RefreshTokenEntity, RefreshTokenModel>();
+            CreateMap<UserDTO, ProfileResponseModel>();
+            CreateMap<ProfilePhotoEntity, ProfilePhotoDTO>();
+            CreateMap<ProfilePhotoDTO, ProfilePhotoResponseModel>()
+                .ForMember(x => x.PhotoPath, opt => opt.MapFrom(x => x.PhotoFullPath))
+                .ForMember(x => x.PhotoId, opt => opt.MapFrom(x => x.Id));
         }
     }
 }
