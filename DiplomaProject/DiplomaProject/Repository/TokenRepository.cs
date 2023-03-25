@@ -37,9 +37,9 @@ namespace DiplomaProject.Repository
             await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteRefreshTokenAsync(long id, CancellationToken cancellationToken)
+        public async Task DeleteRefreshTokenAsync(long tokenId, CancellationToken cancellationToken)
         {
-            var refreshToken = await dbContext.RefreshTokens.Where(tkn => tkn.Id == id).FirstOrDefaultAsync(cancellationToken);
+            var refreshToken = await dbContext.RefreshTokens.Where(tkn => tkn.Id == tokenId).FirstOrDefaultAsync(cancellationToken);
 
             if (refreshToken != null)
             {

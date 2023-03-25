@@ -8,10 +8,10 @@ namespace DiplomaProject.Repository
 {
     public interface IProfilePhotoRepository
     {
-        Task<ProfilePhotoDTO> GetPhotoByUserIdAsync(long id, CancellationToken cancellationToken);
-        Task<ProfilePhotoDTO> GetPhotoByIdAsync(long id, CancellationToken cancellationToken);
-        Task<ProfilePhotoDTO> AddPhotoAsync(long id, string photoName, string photoFullPath, CancellationToken cancellationToken);
-        Task DeletePhotoAsync(long id, CancellationToken cancellationToken);
+        Task<ProfilePhotoDTO> GetPhotoByUserIdAsync(long userId, CancellationToken cancellationToken);
+        Task<ProfilePhotoDTO> GetPhotoByIdAsync(long photoId, CancellationToken cancellationToken);
+        Task<ProfilePhotoDTO> AddPhotoAsync(long userId, string photoName, string photoFullPath, CancellationToken cancellationToken);
+        Task DeletePhotoAsync(long photoId, CancellationToken cancellationToken);
     }
 
     public class ProfilePhotoRepository : IProfilePhotoRepository
@@ -25,18 +25,18 @@ namespace DiplomaProject.Repository
             this.mapper = mapper;
         }
 
-        public async Task<ProfilePhotoDTO> GetPhotoByUserIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<ProfilePhotoDTO> GetPhotoByUserIdAsync(long userId, CancellationToken cancellationToken)
         {
-            var photo = await dbContext.ProfilePhotos.Where(x => x.UserId == id).FirstOrDefaultAsync(cancellationToken);
+            var photo = await dbContext.ProfilePhotos.Where(x => x.UserId == userId).FirstOrDefaultAsync(cancellationToken);
 
             return mapper.Map<ProfilePhotoDTO>(photo);
         }
 
-        public async Task<ProfilePhotoDTO> AddPhotoAsync(long id, string photoName, string photoFullPath, CancellationToken cancellationToken)
+        public async Task<ProfilePhotoDTO> AddPhotoAsync(long userId, string photoName, string photoFullPath, CancellationToken cancellationToken)
         {
             var photo = new ProfilePhotoEntity()
             {
-                UserId = id,
+                UserId = userId,
                 PhotoName = photoName,
                 PhotoFullPath = photoFullPath,
             };
@@ -47,9 +47,9 @@ namespace DiplomaProject.Repository
             return mapper.Map<ProfilePhotoDTO>(photo);
         }
 
-        public async Task DeletePhotoAsync(long id, CancellationToken cancellationToken)
+        public async Task DeletePhotoAsync(long photoId, CancellationToken cancellationToken)
         {
-            var photo = await dbContext.ProfilePhotos.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
+            var photo = await dbContext.ProfilePhotos.Where(x => x.Id == photoId).FirstOrDefaultAsync(cancellationToken);
 
             if(photo != null)
             {
@@ -58,9 +58,9 @@ namespace DiplomaProject.Repository
             }
         }
 
-        public async Task<ProfilePhotoDTO> GetPhotoByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<ProfilePhotoDTO> GetPhotoByIdAsync(long photoId, CancellationToken cancellationToken)
         {
-            var photo = await dbContext.ProfilePhotos.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
+            var photo = await dbContext.ProfilePhotos.Where(x => x.Id == photoId).FirstOrDefaultAsync(cancellationToken);
 
             return mapper.Map<ProfilePhotoDTO>(photo);
         }

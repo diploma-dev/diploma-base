@@ -9,7 +9,7 @@ namespace DiplomaProject.Repository
     public interface IUserRepository
     {
         Task<UserDTO> GetByEmailAsync(string email, CancellationToken cancellationToken);
-        Task<UserDTO> GetByIdAsync(long id, CancellationToken cancellationToken);
+        Task<UserDTO> GetByIdAsync(long userId, CancellationToken cancellationToken);
         Task<UserDTO> AddUserAsync(UserDTO userDTO, CancellationToken cancellationToken);
     }
 
@@ -50,9 +50,9 @@ namespace DiplomaProject.Repository
             return mapper.Map<UserDTO>(user);
         }
 
-        public async Task<UserDTO> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<UserDTO> GetByIdAsync(long userId, CancellationToken cancellationToken)
         {
-            var user = await dbContext.Users.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
+            var user = await dbContext.Users.Where(x => x.Id == userId).FirstOrDefaultAsync(cancellationToken);
 
             return mapper.Map<UserDTO>(user);
         }
