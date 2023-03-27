@@ -85,6 +85,7 @@ namespace DiplomaProject
             builder.Services.AddScoped<IProfilePhotoRepository, ProfilePhotoRepository>();
             builder.Services.AddScoped<IHealthParametrRepository, HealthParametrRepository>();
             builder.Services.AddScoped<IHealthParametrService, HealthParametrService>();
+            builder.Services.AddScoped<IUserBMIRepository, UserBMIRepository>();
 
             var app = builder.Build();
 

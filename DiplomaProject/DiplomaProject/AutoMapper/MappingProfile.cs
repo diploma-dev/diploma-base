@@ -37,6 +37,8 @@ namespace DiplomaProject.AutoMapper
             CreateMap<HealthParametrDTO, HealthParametrsResponseModel>();
             CreateMap<UpdateHealthParametrRequestModel, HealthParametrDTO>();
             CreateMap<UploadHealthParametrRequestModel, HealthParametrDTO>();
+            CreateMap<BMIHistoryEntity, BMIHistoryDTO>();
+            CreateMap<BMIHistoryDTO, BMIResponseModel>();
         }
     }
 }

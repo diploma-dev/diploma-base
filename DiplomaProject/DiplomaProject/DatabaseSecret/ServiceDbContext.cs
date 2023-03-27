@@ -12,6 +12,7 @@ namespace DiplomaProject.DatabaseSecret
         public virtual DbSet<RefreshTokenEntity> RefreshTokens { get; set; }
         public virtual DbSet<ProfilePhotoEntity> ProfilePhotos { get; set; }
         public virtual DbSet<HealthParametrEntity> HealthParametrs { get; set; }
+        public virtual DbSet<BMIHistoryEntity> BMIHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

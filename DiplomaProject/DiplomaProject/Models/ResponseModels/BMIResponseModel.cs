@@ -1,0 +1,10 @@
+﻿using DiplomaProject.EntityModels.Enums;
+
+namespace DiplomaProject.Models.ResponseModels
+{
+    public class BMIResponseModel
+    {
+        public double BMI { get; set; } = default!;
+        public BMIStatus Status { get; set; } = default!;
+    }
+}

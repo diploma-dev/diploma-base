@@ -46,5 +46,14 @@ namespace DiplomaProject.Controllers
         {
             return await healthParametrService.UpdateUserHealthDataAsync(requestModel, cancellationToken);
         }
+
+
+        [HttpGet("user/bmi")]
+        public async Task<BMIResponseModel> GetUserBMI(CancellationToken cancellationToken)
+        {
+            var currentUserId = GetCurrentUserId();
+
+            return await healthParametrService.GetUserBMIAsync(currentUserId, cancellationToken);
+        }
     }
 }
