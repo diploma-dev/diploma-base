@@ -22,7 +22,7 @@ namespace DiplomaProject.Extensions
 
 
                 options.UseNpgsql(connectionString,
-                    b => b.MigrationsAssembly("Migrations"));
+                    b => b.MigrationsAssembly("DiplomaProject.Migrations"));
             });
 
             services.AddScoped<ServiceDbContext, AppDbContext>();

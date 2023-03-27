@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiplomaProject", "DiplomaProject\DiplomaProject.csproj", "{5C822305-7FA0-4CE4-9068-EBCDFE45A89D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrations", "Migrations\Migrations.csproj", "{63D2912B-A277-4BAE-96BC-F31C6CCFBFD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiplomaProject.Migrations", "DiplomaProject.Migrations\DiplomaProject.Migrations.csproj", "{72FA28BA-C156-4F37-8A48-B2D6D145096C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{5C822305-7FA0-4CE4-9068-EBCDFE45A89D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C822305-7FA0-4CE4-9068-EBCDFE45A89D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C822305-7FA0-4CE4-9068-EBCDFE45A89D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63D2912B-A277-4BAE-96BC-F31C6CCFBFD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63D2912B-A277-4BAE-96BC-F31C6CCFBFD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63D2912B-A277-4BAE-96BC-F31C6CCFBFD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63D2912B-A277-4BAE-96BC-F31C6CCFBFD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72FA28BA-C156-4F37-8A48-B2D6D145096C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72FA28BA-C156-4F37-8A48-B2D6D145096C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72FA28BA-C156-4F37-8A48-B2D6D145096C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72FA28BA-C156-4F37-8A48-B2D6D145096C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

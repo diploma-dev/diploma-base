@@ -31,6 +31,12 @@ namespace DiplomaProject.AutoMapper
             CreateMap<ProfilePhotoDTO, ProfilePhotoResponseModel>()
                 .ForMember(x => x.PhotoPath, opt => opt.MapFrom(x => x.PhotoFullPath))
                 .ForMember(x => x.PhotoId, opt => opt.MapFrom(x => x.Id));
+
+            CreateMap<HealthParametrEntity, HealthParametrDTO>();
+            CreateMap<HealthParametrDTO, HealthParametrEntity>();
+            CreateMap<HealthParametrDTO, HealthParametrsResponseModel>();
+            CreateMap<UpdateHealthParametrRequestModel, HealthParametrDTO>();
+            CreateMap<UploadHealthParametrRequestModel, HealthParametrDTO>();
         }
     }
 }
