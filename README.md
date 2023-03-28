@@ -21,7 +21,7 @@
 2. PostgreSQL + PgAdmin4
 
 > Процесс запуска
-1. Клонирование проекта 
+1. Клонирование проекта  [https://github.com/diploma-dev/diploma-base](https://github.com/diploma-dev/diploma-base)
 2. В файле DatabaseSecret.cs заполняете следующие поля
 3. private string host = "localhost";
 4. private string port = "5432";
