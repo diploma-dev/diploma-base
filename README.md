@@ -23,14 +23,14 @@
 > Процесс запуска
 1. Клонирование проекта 
 2. В файле DatabaseSecret.cs заполняете следующие поля:
-        > private string host = "localhost";
-        > private string port = "5432";
-        > private string username = "postgres"; - Ваш логин от PgAdmin4
-        > private string password = ""; - Ваш пароль от PgAdmin4
-        > private string database = ""; - Ваше название базы данных
-        > private string minPool = "1";
-        
-        !Эти файлы нельзя комитить!
+
+   > private string host = "localhost";
+   > private string port = "5432";
+   > private string username = "postgres"; - Ваш логин от PgAdmin4
+   > private string password = ""; - Ваш пароль от PgAdmin4
+   > private string database = ""; - Ваше название базы данных
+   > private string minPool = "1";
+       
 3. В PackageManagerConsole нужно прописать команду Update-database (эта команда создаст базу данных)
 4. Запускайте и развлекайтесь. 
 
