@@ -1,4 +1,5 @@
 ﻿using DiplomaProject.Models.RequestModels;
+using DiplomaProject.Models.ResponseModels;
 using DiplomaProject.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,27 +22,27 @@ namespace DiplomaProject.Controllers
         }
 
         [HttpGet("profile")]
-        public async Task<IActionResult> GetUserProfile(CancellationToken cancellationToken)
+        public async Task<ProfileResponseModel> GetUserProfile(CancellationToken cancellationToken)
         {
             var currentUserId = GetCurrentUserId();
 
-            return Ok(await profileService.GetUserProfileAsync(currentUserId, cancellationToken));
+            return await profileService.GetUserProfileAsync(currentUserId, cancellationToken);
         }
 
         [HttpGet("photo")]
-        public async Task<IActionResult> GetProfilePhoto(CancellationToken cancellationToken)
+        public async Task<ProfilePhotoResponseModel> GetProfilePhoto(CancellationToken cancellationToken)
         {
             var currentUserId = GetCurrentUserId();
 
-            return Ok(await photoService.GetProfilePhotoAsync(currentUserId, cancellationToken));
+            return await photoService.GetProfilePhotoAsync(currentUserId, cancellationToken);
         }
 
         [HttpPost("photo")]
-        public async Task<IActionResult> UploadProfilePhoto([FromForm] UploadProfilePhotoRequestModel requestModel, CancellationToken cancellationToken)
+        public async Task<ProfilePhotoResponseModel> UploadProfilePhoto([FromForm] UploadProfilePhotoRequestModel requestModel, CancellationToken cancellationToken)
         {
             var currentUserId = GetCurrentUserId();
 
-            return Ok(await photoService.UploadProfilePhotoAsync(currentUserId, requestModel.File, cancellationToken));
+            return await photoService.UploadProfilePhotoAsync(currentUserId, requestModel.File, cancellationToken);
         }
 
         [HttpDelete("photo")]

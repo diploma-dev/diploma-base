@@ -20,12 +20,14 @@ namespace DiplomaProject.Services
         private readonly IHealthParametrRepository healthParametrRepository;
         private readonly IUserBMIRepository userBMIRepository;
         private readonly IMapper mapper;
+        private readonly IBMICalculationService bMICalculationService;
 
-        public HealthParametrService(IHealthParametrRepository healthParametrRepository, IMapper mapper, IUserBMIRepository userBMIRepository)
+        public HealthParametrService(IHealthParametrRepository healthParametrRepository, IMapper mapper, IUserBMIRepository userBMIRepository, IBMICalculationService bMICalculationService)
         {
             this.healthParametrRepository = healthParametrRepository;
             this.mapper = mapper;
             this.userBMIRepository = userBMIRepository;
+            this.bMICalculationService = bMICalculationService;
         }
 
         public async Task<HealthParametrsResponseModel> GetUserHealthDataAsync(long userId, CancellationToken cancellationToken)
@@ -57,61 +59,20 @@ namespace DiplomaProject.Services
         {
             var userHealthParametrs = await healthParametrRepository.GetHealthParametrAsync(userId, cancellationToken);
 
-            var bmi = CalculateBMI(userHealthParametrs.Weight, userHealthParametrs.Height, userHealthParametrs.Age, userHealthParametrs.Gender);
-
-            var bmiHistoryDTO = await userBMIRepository.AddBMIAsync(bmi, userId, cancellationToken);
-
-            var response = mapper.Map<BMIResponseModel>(bmiHistoryDTO);
-
-            response.Status = GetBMIStatus(bmi);
-
-            return response;
-        }
-
-        private double CalculateBMI(long weight, long height, int age, Gender gender)
-        {
-            double bmi = (weight / Math.Pow((double)height / 100, 2));
-
-            if (gender == Gender.Male)
+            if(userHealthParametrs != null)
             {
-                bmi += 0.5;
+                var bmi = bMICalculationService.CalculateBMI(userHealthParametrs.Weight, userHealthParametrs.Height, userHealthParametrs.Age, userHealthParametrs.Gender);
 
-                if (age > 50)
-                {
-                    bmi += 0.7;
-                }
-            }
-            else if (gender == Gender.Female)
-            {
-                bmi -= 0.5;
+                var bmiHistoryDTO = await userBMIRepository.AddBMIAsync(bmi, userId, cancellationToken);
 
-                if (age > 50)
-                {
-                    bmi += 0.7;
-                }
+                var response = mapper.Map<BMIResponseModel>(bmiHistoryDTO);
+
+                response.Status = bMICalculationService.GetBMIStatus(bmi);
+
+                return response;
             }
 
-            return bmi;
-        }
-
-        private BMIStatus GetBMIStatus(double bmi)
-        {
-            if (bmi < 18.5)
-            {
-                return BMIStatus.Underweight;
-            }
-            else if (bmi < 25)
-            {
-                return BMIStatus.NormalWeight;
-            }
-            else if (bmi < 30)
-            {
-                return BMIStatus.Overweight;
-            }
-            else
-            {
-                return BMIStatus.Obese;
-            }
+            return null;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DiplomaProject.EntityModels;
-using DiplomaProject.Models.ResponseModels.ProfilePhoto;
+using DiplomaProject.Models.ResponseModels;
 using DiplomaProject.Repository;
 using DiplomaProject.Secrets;
 using Microsoft.AspNetCore.Hosting;

@@ -1,4 +1,5 @@
 ﻿using DiplomaProject.Models.RequestModels;
+using DiplomaProject.Models.ResponseModels;
 using DiplomaProject.Services;
 using DiplomaProject.Validator;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +27,9 @@ namespace DiplomaProject.Controllers
 
             if (validationResult.IsValid)
             {
-                return Ok(await authenticationService.RegisterAsync(requestModel, cancellationToken));
+                var response = await authenticationService.RegisterAsync(requestModel, cancellationToken);
+
+                return Ok(response);
             }
 
             return BadRequest();
@@ -40,16 +43,18 @@ namespace DiplomaProject.Controllers
 
             if (validationResult.IsValid)
             {
-                return Ok(await authenticationService.LoginAsync(requestModel, cancellationToken));
+                var response = await authenticationService.LoginAsync(requestModel, cancellationToken);
+
+                return Ok(response);
             }
 
             return BadRequest();
         }
 
         [AllowAnonymous, HttpPost("refresh")]
-        public async Task<IActionResult> RefreshToken([FromBody] string token, CancellationToken cancellationToken)
+        public async Task<AuthenticationResponseModel> RefreshToken([FromBody] string token, CancellationToken cancellationToken)
         {
-            return Ok(await authenticationService.RefreshAsync(token, cancellationToken));
+            return await authenticationService.RefreshAsync(token, cancellationToken);
         }
     }
 }

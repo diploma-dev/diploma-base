@@ -5,6 +5,6 @@ namespace DiplomaProject.Models.ResponseModels
     public class BMIResponseModel
     {
         public double BMI { get; set; } = default!;
-        public BMIStatus Status { get; set; } = default!;
+        public string Status { get; set; } = default!;
     }
 }

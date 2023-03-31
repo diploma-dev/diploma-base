@@ -2,6 +2,7 @@
 using DiplomaProject.Models.ResponseModels;
 using DiplomaProject.Services;
 using DiplomaProject.Validator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OneOf;
 
@@ -9,6 +10,7 @@ namespace DiplomaProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class HealthParametrController : ApiBaseController
     {
         private readonly IHealthParametrService healthParametrService;

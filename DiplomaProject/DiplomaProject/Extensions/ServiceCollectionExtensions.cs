@@ -21,8 +21,8 @@ namespace DiplomaProject.Extensions
                 var collectSqlQueries = dataAccessOptions.CollectSqlQueries;
 
 
-                options.UseNpgsql(connectionString,
-                    b => b.MigrationsAssembly("DiplomaProject.Migrations"));
+                options.UseNpgsql(connectionString);
+                    //b => b.MigrationsAssembly("DiplomaProject.Migrations"));
             });
 
             services.AddScoped<ServiceDbContext, AppDbContext>();

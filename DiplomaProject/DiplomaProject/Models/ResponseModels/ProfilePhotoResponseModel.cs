@@ -1,4 +1,4 @@
-﻿namespace DiplomaProject.Models.ResponseModels.ProfilePhoto
+﻿namespace DiplomaProject.Models.ResponseModels
 {
     public class ProfilePhotoResponseModel
     {

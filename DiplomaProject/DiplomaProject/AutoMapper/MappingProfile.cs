@@ -4,7 +4,6 @@ using DiplomaProject.Models.AuthHelpers;
 using DiplomaProject.Models.DTO;
 using DiplomaProject.Models.RequestModels;
 using DiplomaProject.Models.ResponseModels;
-using DiplomaProject.Models.ResponseModels.ProfilePhoto;
 
 namespace DiplomaProject.AutoMapper
 {
@@ -39,6 +38,8 @@ namespace DiplomaProject.AutoMapper
             CreateMap<UploadHealthParametrRequestModel, HealthParametrDTO>();
             CreateMap<BMIHistoryEntity, BMIHistoryDTO>();
             CreateMap<BMIHistoryDTO, BMIResponseModel>();
+            CreateMap<GoalEntity, GoalDTO>();
+            CreateMap<GoalDTO, GoalResponseModel>();
         }
     }
 }
