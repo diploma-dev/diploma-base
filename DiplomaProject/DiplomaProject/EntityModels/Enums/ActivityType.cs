@@ -2,9 +2,10 @@
 {
     public enum ActivityType
     {
-        Active = 1,
-        ModeratelyActive = 2,
-        LowActivity = 3,
-        Sedentary = 4
+        Sedentary = 1, 
+        LightlyActive = 2, 
+        ModeratelyActive = 3, 
+        VeryActive = 4, 
+        ExtraActive = 5 
     }
 }

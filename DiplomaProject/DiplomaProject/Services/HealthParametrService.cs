@@ -72,7 +72,7 @@ namespace DiplomaProject.Services
                 return response;
             }
 
-            return null;
+            return new BMIResponseModel();
         }
     }
 }

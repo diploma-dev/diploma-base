@@ -14,6 +14,7 @@ namespace DiplomaProject.DatabaseSecret
         public virtual DbSet<HealthParametrEntity> HealthParametrs { get; set; }
         public virtual DbSet<BMIHistoryEntity> BMIHistories { get; set; }
         public virtual DbSet<GoalEntity> Goals { get; set; }
+        public virtual DbSet<GoalTemplateEntity> GoalTemplates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

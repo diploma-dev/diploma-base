@@ -77,6 +77,23 @@ namespace DiplomaProject.Migrations
                     b.ToTable("Goals");
                 });
 
+            modelBuilder.Entity("DiplomaProject.EntityModels.GoalTemplateEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GoalTemplates");
+                });
+
             modelBuilder.Entity("DiplomaProject.EntityModels.HealthParametrEntity", b =>
                 {
                     b.Property<long>("Id")

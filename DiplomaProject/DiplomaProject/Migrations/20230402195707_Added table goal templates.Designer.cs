@@ -3,21 +3,24 @@ using System;
 using DiplomaProject.DatabaseSecret;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace DiplomaProject.Migrations.Migrations
+namespace DiplomaProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230402195707_Added table goal templates")]
+    partial class Addedtablegoaltemplates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -44,6 +47,54 @@ namespace DiplomaProject.Migrations.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("BMIHistories");
+                });
+
+            modelBuilder.Entity("DiplomaProject.EntityModels.GoalEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("DailyCalorie")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("DurationInDays")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TargetWeight")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Goals");
+                });
+
+            modelBuilder.Entity("DiplomaProject.EntityModels.GoalTemplateEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GoalTemplates");
                 });
 
             modelBuilder.Entity("DiplomaProject.EntityModels.HealthParametrEntity", b =>
@@ -161,6 +212,17 @@ namespace DiplomaProject.Migrations.Migrations
                 });
 
             modelBuilder.Entity("DiplomaProject.EntityModels.BMIHistoryEntity", b =>
+                {
+                    b.HasOne("DiplomaProject.EntityModels.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DiplomaProject.EntityModels.GoalEntity", b =>
                 {
                     b.HasOne("DiplomaProject.EntityModels.UserEntity", "User")
                         .WithMany()

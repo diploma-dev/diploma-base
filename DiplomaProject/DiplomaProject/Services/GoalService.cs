@@ -11,7 +11,6 @@ namespace DiplomaProject.Services
 {
     public interface IGoalService
     {
-
         Task<GoalResponseModel> CreateGoalAsync(CreateGoalRequestModel requestModel, CancellationToken cancellationToken);
         Task DeleteGoalAsync(long goalId, CancellationToken cancellationToken);
         Task<GoalResponseModel> GetGoalAsync(long userId, CancellationToken cancellationToken);
@@ -22,14 +21,16 @@ namespace DiplomaProject.Services
         private readonly IHealthParametrRepository healthParametrRepository;
         private readonly IGoalRepository goalRepository;
         private readonly ICalorieService calorieService;
+        private readonly IGoalTemplateRepository goalTemplateRepository;
         private readonly IMapper mapper;
 
-        public GoalService(IHealthParametrRepository healthParametrRepository, IGoalRepository goalRepository, IMapper mapper, ICalorieService calorieService)
+        public GoalService(IHealthParametrRepository healthParametrRepository, IGoalRepository goalRepository, IMapper mapper, ICalorieService calorieService, IGoalTemplateRepository goalTemplateRepository)
         {
             this.healthParametrRepository = healthParametrRepository;
             this.goalRepository = goalRepository;
             this.mapper = mapper;
             this.calorieService = calorieService;
+            this.goalTemplateRepository = goalTemplateRepository;
         }
 
         public async Task<GoalResponseModel> GetGoalAsync(long userId, CancellationToken cancellationToken)
@@ -45,10 +46,30 @@ namespace DiplomaProject.Services
 
             if(requestModel.TargetWeight <= userHealthParametrs.Weight)
             {
-                var calorieInfoModel = calorieService.CalculateDailyCalorieDeficit(userHealthParametrs.Weight, userHealthParametrs.Height, userHealthParametrs.Age, userHealthParametrs.Gender, requestModel.ActivityType);
-                var goalDuration = calorieService.CalculateDaysToReachTargetWeight(userHealthParametrs.Weight, requestModel.TargetWeight, calorieInfoModel.DailyCalorieDeficit);
+                var loseCalorieInfoModel = calorieService.CalculateDailyCalorieDeficit(userHealthParametrs.Weight, userHealthParametrs.Height, userHealthParametrs.Age, userHealthParametrs.Gender, requestModel.ActivityType);
+                var goalDuration = calorieService.CalculateDaysToReachTargetWeight(userHealthParametrs.Weight, requestModel.TargetWeight, loseCalorieInfoModel.DailyCalorieDeficit);
 
-                var goalDescription = GenerateGoalDescription(GoalType.LoseWeight, requestModel.TargetWeight, goalDuration);
+                var goalDescription = await GenerateGoalDescription(GoalType.LoseWeight, requestModel.TargetWeight, goalDuration, cancellationToken);
+
+                var goalDTO = new GoalDTO()
+                {
+                    UserId = requestModel.UserId,
+                    Description = goalDescription,
+                    TargetWeight = requestModel.TargetWeight,
+                    DurationInDays = goalDuration,
+                    DailyCalorie = loseCalorieInfoModel.DailyCalorie
+                };
+
+                goalDTO = await goalRepository.CreateGoalAsync(goalDTO, cancellationToken);
+
+                return mapper.Map<GoalResponseModel>(goalDTO);
+            }
+            else
+            {
+                var calorieInfoModel = calorieService.CalculateDailyCalorieProficit(userHealthParametrs.Weight, userHealthParametrs.Height, userHealthParametrs.Age, userHealthParametrs.Gender, requestModel.ActivityType);
+                var goalDuration = calorieService.CalculateDaysToReachTargetWeight(userHealthParametrs.Weight, requestModel.TargetWeight, calorieInfoModel.DailyCalorieProficit);
+
+                var goalDescription = await GenerateGoalDescription(GoalType.GainWeight, requestModel.TargetWeight, goalDuration, cancellationToken);
 
                 var goalDTO = new GoalDTO()
                 {
@@ -63,11 +84,6 @@ namespace DiplomaProject.Services
 
                 return mapper.Map<GoalResponseModel>(goalDTO);
             }
-            else
-            {
-                return null;
-            }
-
         }
 
         public async Task DeleteGoalAsync(long goalId, CancellationToken cancellationToken)
@@ -75,16 +91,26 @@ namespace DiplomaProject.Services
             await goalRepository.DeleteGoalAsync(goalId, cancellationToken);
         }
 
-        private string GenerateGoalDescription(GoalType goalType, long targetWeight, long durationInDays)
+        private async Task<string> GenerateGoalDescription(GoalType goalType, long targetWeight, long durationInDays, CancellationToken cancellationToken)
         {
-            if(goalType == GoalType.LoseWeight)
+            var goalRandomizer = new Random();
+            string goalTemplate = string.Empty;
+            long goalId = 0;
+
+            switch (goalType)
             {
-                return $"Привести вес своего тела в {targetWeight}кг через {durationInDays} дней";
+                case GoalType.LoseWeight:
+                    goalId = goalRandomizer.Next(1, 10);
+                    break;
+                case GoalType.GainWeight:
+                    goalId = goalRandomizer.Next(11, 20);
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(goalType));
             }
-            else
-            {
-                return $"Привести вес своего тела в {targetWeight}кг через {durationInDays} дней";
-            }
+
+            goalTemplate = await goalTemplateRepository.GetGoalTemplateAsync(goalId, cancellationToken);
+
+            return goalTemplate.Replace("{targetWeight}", targetWeight.ToString()).Replace("{durationInDays}", durationInDays.ToString());
         }
     }
 }

@@ -90,6 +90,7 @@ namespace DiplomaProject
             builder.Services.AddScoped<IGoalRepository, GoalRepository>();
             builder.Services.AddScoped<IBMICalculationService, BMICalculationService>();
             builder.Services.AddScoped<ICalorieService, CalorieService>();
+            builder.Services.AddScoped<IGoalTemplateRepository, GoalTemplateRepository>();
 
             var app = builder.Build();
 
