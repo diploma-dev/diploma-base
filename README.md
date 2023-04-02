@@ -25,9 +25,9 @@
 2. В файле DatabaseSecret.cs заполняете следующие поля
 3. private string host = "localhost";
 4. private string port = "5432";
-5. private string username = "postgres"; - Ваш логин от PgAdmin4
+5. private string username = ""; - Ваш логин от PgAdmin4
 6. private string password = ""; - Ваш пароль от PgAdmin4
-7.private string database = ""; - Ваше название базы данных
+7. private string database = ""; - Ваше название базы данных
 8. private string minPool = "1";    
 9. В PackageManagerConsole нужно прописать команду Update-database (эта команда создаст базу данных)
 10. Запускайте и развлекайтесь. 
