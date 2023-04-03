@@ -1,13 +1,12 @@
 ﻿using DiplomaProject.Models.AuthHelpers;
 using DiplomaProject.Models.DTO;
 using DiplomaProject.Secrets;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace DiplomaProject.Helpers
+namespace DiplomaProject.Services
 {
     public interface IAuthHelper
     {
