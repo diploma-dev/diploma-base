@@ -1,11 +1,12 @@
 ﻿using DiplomaProject.DatabaseSecret;
+using DiplomaProject.EntityModels.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiplomaProject.Repository
 {
     public interface IGoalTemplateRepository
     {
-        Task<string> GetGoalTemplateAsync(long id, CancellationToken cancellationToken);
+        Task<string> GetGoalTemplateAsync(GoalType goalType, CancellationToken cancellationToken);
     }
 
     public class GoalTemplateRepository : IGoalTemplateRepository
@@ -17,19 +18,23 @@ namespace DiplomaProject.Repository
             this.dbContext = dbContext;
         }
 
-        public async Task<string> GetGoalTemplateAsync(long id, CancellationToken cancellationToken)
+        public async Task<string> GetGoalTemplateAsync(GoalType goalType, CancellationToken cancellationToken)
         {
-            var goalTemplate = await dbContext.GoalTemplates
-                .Where(x => x.Id == id)
+            Random rand = new Random();
+            
+            var goalTemplates = await dbContext.GoalTemplates
+                .Where(x => x.GoalType == goalType)
                 .Select(x => x.Description)
-                .FirstOrDefaultAsync(cancellationToken);
+                .ToListAsync(cancellationToken);
 
-            if(goalTemplate != null)
+            if (goalTemplates != null)
             {
-                return goalTemplate;
+                int index = rand.Next(0, goalTemplates.Count - 1);
+
+                return goalTemplates[index];
             }
 
-            return "Привести вес своего тела в {targetWeight}кг через {durationInDays} дней";
+            return "Привести вес своего тела в {targetWeight} кг через {durationInDays} дней";
         }
     }
 }

@@ -30,6 +30,7 @@ namespace DiplomaProject.Helpers
                 new Claim(ClaimTypes.Name, user.Firstname),
                 new Claim(ClaimTypes.Surname, user.Lastname),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim("Role", user.Role)
             };
 
             var token = new JwtSecurityToken(

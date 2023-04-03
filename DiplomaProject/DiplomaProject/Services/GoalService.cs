@@ -93,22 +93,7 @@ namespace DiplomaProject.Services
 
         private async Task<string> GenerateGoalDescription(GoalType goalType, long targetWeight, long durationInDays, CancellationToken cancellationToken)
         {
-            var goalRandomizer = new Random();
-            string goalTemplate = string.Empty;
-            long goalId = 0;
-
-            switch (goalType)
-            {
-                case GoalType.LoseWeight:
-                    goalId = goalRandomizer.Next(1, 10);
-                    break;
-                case GoalType.GainWeight:
-                    goalId = goalRandomizer.Next(11, 20);
-                    break;
-                default: throw new ArgumentOutOfRangeException(nameof(goalType));
-            }
-
-            goalTemplate = await goalTemplateRepository.GetGoalTemplateAsync(goalId, cancellationToken);
+            var goalTemplate = await goalTemplateRepository.GetGoalTemplateAsync(goalType, cancellationToken);
 
             return goalTemplate.Replace("{targetWeight}", targetWeight.ToString()).Replace("{durationInDays}", durationInDays.ToString());
         }

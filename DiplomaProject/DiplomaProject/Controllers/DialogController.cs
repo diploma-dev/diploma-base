@@ -9,7 +9,7 @@ namespace DiplomaProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "BaseUser")]
     public class DialogController : ApiBaseController
     {
         [HttpPost("message")]

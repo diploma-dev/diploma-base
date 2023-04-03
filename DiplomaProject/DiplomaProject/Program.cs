@@ -12,6 +12,9 @@ using DiplomaProject.DatabaseSecret;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using DiplomaProject.Helpers.RoleHelpers;
+using Microsoft.AspNetCore.Authorization;
+using DiplomaProject.EntityModels.Enums;
 
 namespace DiplomaProject
 {
@@ -20,8 +23,6 @@ namespace DiplomaProject
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-           
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -68,6 +69,21 @@ namespace DiplomaProject
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+
+            builder.Services.AddAuthorization(opts => {
+                opts.AddPolicy("Admin", policy => policy.RequireAssertion(context =>
+                    context.User.HasClaim(c => c.Type == "Role" && c.Value == UserRole.Admin.ToString())));
+
+                opts.AddPolicy("BaseUser", policy => policy.RequireAssertion(context =>
+                    context.User.HasClaim(c => c.Type == "Role" && c.Value == UserRole.BaseUser.ToString())));
+
+                opts.AddPolicy("PremiumUser", policy => policy.RequireAssertion(context =>
+                    context.User.HasClaim(c => c.Type == "Role" && c.Value == UserRole.PremiumUser.ToString())));
+            });
+
+            builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
             builder.Services.AddAutoMapper(config =>
             {

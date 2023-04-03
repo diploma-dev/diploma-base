@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DiplomaProject.DatabaseSecret;
 using DiplomaProject.EntityModels;
+using DiplomaProject.EntityModels.Enums;
 using DiplomaProject.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,7 @@ namespace DiplomaProject.Repository
                 Firstname = userDTO.Firstname,
                 Lastname = userDTO.Lastname,
                 Email = userDTO.Email,
+                Role = UserRole.BaseUser.ToString(),
                 PasswordHash = userDTO.PasswordHash,
                 PasswordSalt = userDTO.PasswordSalt,
             };

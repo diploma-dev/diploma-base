@@ -3,6 +3,7 @@ using System;
 using DiplomaProject.DatabaseSecret;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DiplomaProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230403180109_added goal type to goal template table")]
+    partial class addedgoaltypetogoaltemplatetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,9 +209,8 @@ namespace DiplomaProject.Migrations
                         .IsRequired()
                         .HasColumnType("bytea");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

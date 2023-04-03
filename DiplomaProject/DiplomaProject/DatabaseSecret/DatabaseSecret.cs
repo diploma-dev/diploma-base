@@ -13,7 +13,7 @@ namespace DiplomaProject.DatabaseSecret
         private string port = "5432";
         private string username = "postgres";
         private string password = "652431";
-        private string database = "test_DB_Diploma_test_5";
+        private string database = "test_DB_Diploma_test_6";
         private string minPool = "1";
 
         public string GetConnectionString()
